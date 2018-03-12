@@ -1,3 +1,3 @@
 #!/bin/sh
 DIR="$(cd "$(dirname "$0")" && pwd)"
-source $DIR/prompt.sh "push"
+source $DIR/protecc.sh "push"
