@@ -1,35 +1,31 @@
 # git-protecc
+[![Build Status](https://travis-ci.org/dcrtantuco/git-protecc.svg?branch=master)](https://travis-ci.org/dcrtantuco/git-protecc)
+
 Custom `pre-commit` and `pre-push` git hooks to prompt user when pushing/committing to master/develop
 
-## Protected Branches
-- master
-- develop
-
-## Setup
-1. Execute:
+## To Install
+Execute
 ```
-git clone https://github.com/dcrtantuco/git-protecc.git ~/.git-protecc
+git clone https://github.com/dcrtantuco/git-protecc.git ~/.git-protecc && chmod +x ~/.git-protecc/git-protecc
 ```
 
-2. Make git-protecc executable
-```
-chmod +x ~/.git-protecc/git-protecc
-```
-
-3. Update PATH variable in startup files (.bash_profile, .zsh, etc.)
-
-Makes git-protecc available globally
+Make git-protecc available globally by updating PATH variable in your startup file (.bash_profile, .zsh, etc.)
 ```
 export PATH=$PATH:/$HOME/.git-protecc
 ```
 
 ## Usage
-Execute on a git repository (root, where .git is located)
+Execute on a git repository _(should be in root for now, where .git is located)_
 
 This command copies custom `pre-commit` and `pre-push` hooks to current repository
+
 ```
 git-protecc
 ```
+
+## Protected Branches
+- master
+- develop
 
 ## TODO
 ```
@@ -39,3 +35,4 @@ git-protecc
 # TODO add error message if not executed in root / parent folder
 # TODO backup the old hook file before copying?
 ```
+
