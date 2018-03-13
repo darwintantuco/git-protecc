@@ -2,10 +2,6 @@
 IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
 if [[ $IS_GIT_REPO ]]
 then
-  # TODO add flags to enable either pre-commit or pre-push or both
-  # TODO add message if hooks exist / already copied
-  # TODO add error message if not executed in root / parent folder
-  # TODO backup the old hook file before copying?
   cp -i ~/.git-protecc/protecc.sh .git/hooks/
   cp -i ~/.git-protecc/pre-commit .git/hooks/
   cp -i ~/.git-protecc/pre-push .git/hooks/

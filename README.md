@@ -5,17 +5,31 @@ Custom `pre-commit` and `pre-push` git hooks to prompt user when pushing/committ
 1. Execute:
 ```
 git clone https://github.com/dcrtantuco/git-protecc.git ~/.git-protecc
-
-chmod 777 ~/.git-protecc/git-protecc
 ```
 
-2. Update PATH in startup files (.bash_profile, .zsh, etc.)
+2. Make git-protecc executable
+```
+chmod -x ~/.git-protecc/git-protecc
+```
+
+3. Update PATH variable in startup files (.bash_profile, .zsh, etc.)
+   This makes git-protecc available globally 
 ```
 export PATH=$PATH:/$HOME/.git-protecc
 ```
 
 ## Usage
-Execute on any git repository to copy `pre-commit` and `pre-push` hooks
+Execute on a git repository 
+This copies custom `pre-commit` and `pre-push` hooks to current git repo
 ```
 git-protecc
+```
+
+## TODO
+```
+# TODO add tests
+# TODO add flags to enable either pre-commit or pre-push or both
+# TODO add message if hooks exist / already copied
+# TODO add error message if not executed in root / parent folder
+# TODO backup the old hook file before copying?
 ```
