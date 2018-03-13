@@ -1,6 +1,10 @@
 # git-protecc
 Custom `pre-commit` and `pre-push` git hooks to prompt user when pushing/committing to master/develop
 
+## Protected Branches
+- master
+- develop
+
 ## Setup
 1. Execute:
 ```
@@ -9,18 +13,20 @@ git clone https://github.com/dcrtantuco/git-protecc.git ~/.git-protecc
 
 2. Make git-protecc executable
 ```
-chmod -x ~/.git-protecc/git-protecc
+chmod +x ~/.git-protecc/git-protecc
 ```
 
 3. Update PATH variable in startup files (.bash_profile, .zsh, etc.)
-   This makes git-protecc available globally 
+
+Makes git-protecc available globally
 ```
 export PATH=$PATH:/$HOME/.git-protecc
 ```
 
 ## Usage
-Execute on a git repository 
-This copies custom `pre-commit` and `pre-push` hooks to current git repo
+Execute on a git repository (root, where .git is located)
+
+This command copies custom `pre-commit` and `pre-push` hooks to current repository
 ```
 git-protecc
 ```
