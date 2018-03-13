@@ -1,3 +1,1 @@
-#!/bin/sh
-echo Hello World
-
+./tests/libs/bats/bin/bats tests/*.bats
