@@ -3,6 +3,8 @@
 
 Custom `pre-commit` and `pre-push` git hooks to prompt user when pushing/committing to master/develop
 
+![sample](demo.gif)
+
 ## Installation
 ### npm
 ```

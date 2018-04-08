@@ -6,7 +6,7 @@ then
   cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/protecc.sh .git/hooks/
   cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-commit .git/hooks/
   cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
-  echo git-protecc hooks copied
+  echo git-protecc hooks copied.
   exit 0
 fi
-echo not a git repository!
+echo Not a git repository!
