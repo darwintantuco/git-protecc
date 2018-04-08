@@ -1,11 +1,17 @@
 {
   "name": "git-protecc",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Protection from unintentional commit/push to develop/master",
   "scripts": {
     "test": "./run-tests.sh"
   },
+  "bin": {
+    "git-protecc": "./bin/git-protecc"
+  },
   "repository": "git@github.com:dcrtantuco/git-protecc.git",
   "author": "darwin christopher tantuco <darwinxciii@yahoo.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dcrtantuco/git-protecc/issues"
+  }
 }
