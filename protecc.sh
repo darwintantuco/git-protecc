@@ -1,24 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env sh
 PROTECTED_BRANCHES=(master develop)
-# get current branch
+# Get current branch
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
-PROMPT="you're about to $1 in $CURRENT_BRANCH branch. are you sure? (y/n): "
-NO="$1 prevented.. you're welcome"
-INVALID='invalid command! $1 prevented..'
+PROMPT="You're about to $1 in $CURRENT_BRANCH branch. Are you sure? [Yn]: "
+NO="git $1 is not executed."
+INVALID='Invalid command! git $1 is not executed.'
 
-# check if current branch is protected
+# Check if current branch is protected
 if [[ " ${PROTECTED_BRANCHES[@]} " =~ " $CURRENT_BRANCH " ]]
 then
-  # allows user input
+  # Allows user input
   exec < /dev/tty
   while true; do
     read -p "$PROMPT" command
-    case "$command" in
-      y|Y )
-        # exit gracefully, proceed with git push command
+    case "$REPLY" in
+      Y )
+        # Exit gracefully, proceed with git commit/push
         exit 0
         ;;
-      n|N )
+      n )
         echo $NO
         exit 1
         ;;
