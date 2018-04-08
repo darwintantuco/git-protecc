@@ -2,9 +2,9 @@
 IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
 if [[ $IS_GIT_REPO ]]
 then
-  cp -i ~/.git-protecc/protecc.sh .git/hooks/
-  cp -i ~/.git-protecc/pre-commit .git/hooks/
-  cp -i ~/.git-protecc/pre-push .git/hooks/
+  cp -i ../protecc.sh .git/hooks/
+  cp -i ../pre-commit .git/hooks/
+  cp -i ../pre-push .git/hooks/
   echo git-protecc hooks copied
   exit 0
 fi

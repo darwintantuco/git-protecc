@@ -1,6 +1,6 @@
 {
   "name": "git-protecc",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Protection from unintentional commit/push to develop/master",
   "scripts": {
     "test": "./run-tests.sh"
