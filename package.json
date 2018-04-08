@@ -1,0 +1,11 @@
+{
+  "name": "git-protecc",
+  "version": "1.0.1",
+  "description": "Protection from unintentional commit/push to develop/master",
+  "scripts": {
+    "test": "./run-tests.sh"
+  },
+  "repository": "git@github.com:dcrtantuco/git-protecc.git",
+  "author": "darwin christopher tantuco <darwinxciii@yahoo.com>",
+  "license": "MIT"
+}

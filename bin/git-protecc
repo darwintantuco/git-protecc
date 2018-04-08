@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
 if [[ $IS_GIT_REPO ]]
 then
