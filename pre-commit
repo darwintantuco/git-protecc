@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-DIR=$(dirname "$0")
-source $DIR/protecc.sh "commit"
