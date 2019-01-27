@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
 NPM_GLOBAL_PATH="$(npm config get prefix)"
 if [[ $IS_GIT_REPO ]]
