@@ -1,4 +1,4 @@
 language: bash
 
 script:
-  - yarn test
+  - yarn && yarn test
