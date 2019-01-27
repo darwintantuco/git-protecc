@@ -3,22 +3,29 @@
 load '../node_modules/bats-support/load'
 load '../node_modules/bats-assert/load'
 
+AWESOME_REPO=$(mktemp -d)
+BASE_DIR=$(dirname $BATS_TEST_DIRNAME)
+RESP_FILE="RESP_FILE.txt"
+
 setup() {
-  mkdir AWESOME
-  cd AWESOME
+  cd $AWESOME_REPO
   git init
-  echo AWESOME TEXT > awesome.txt
+  echo "AWESOME TEXT" > awesome.txt
   git add awesome.txt
   git commit -m "Initial commit"
-  cp ../protecc.sh .git/hooks/
-  cp ../pre-commit .git/hooks/
+
+  # run $BASE_DIR/bin/git-protecc
+  cp $BASE_DIR/protecc.sh .git/hooks/
+  cp $BASE_DIR/pre-commit .git/hooks/
   echo MORE AWESOME TEXT > awesome.txt
   git add awesome.txt
+
+  assert [ -e $AWESOME_REPO/.git/hooks/pre-commit ]
 }
 
 teardown() {
-  cd ..
-  rm -rf AWESOME
+  echo "Deleting $AWESOME_REPO."
+  rm -rf $AWESOME_REPO
 }
 
 @test 'Commit to master with "Y" response' {
