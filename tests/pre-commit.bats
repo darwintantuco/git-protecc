@@ -1,4 +1,7 @@
-#!./tests/libs/bats/bin/bats
+#!/usr/bin/env bats
+
+load '../node_modules/bats-support/load'
+load '../node_modules/bats-assert/load'
 
 setup() {
   mkdir AWESOME
