@@ -5,7 +5,7 @@ load '../node_modules/bats-assert/load'
 
 AWESOME_REPO=$(mktemp -d)
 BASE_DIR=$(dirname $BATS_TEST_DIRNAME)
-RESP_FILE="RESP_FILE.txt"
+REPLY="REPLY-TEST.txt"
 
 setup() {
   cd $AWESOME_REPO
@@ -15,11 +15,13 @@ setup() {
   git commit -m "Initial commit"
 
   # run $BASE_DIR/bin/git-protecc
-  cp $BASE_DIR/protecc.sh .git/hooks/
-  cp $BASE_DIR/pre-commit .git/hooks/
+  cp $BASE_DIR/protecc.sh $AWESOME_REPO/.git/hooks/
+  cp $BASE_DIR/pre-commit $AWESOME_REPO/.git/hooks/
   echo MORE AWESOME TEXT > awesome.txt
   git add awesome.txt
 
+
+  assert [ -e $AWESOME_REPO/.git/hooks/protecc.sh ]
   assert [ -e $AWESOME_REPO/.git/hooks/pre-commit ]
 }
 
@@ -29,21 +31,20 @@ teardown() {
 }
 
 @test 'Commit to master with "Y" response' {
-  # Hacks: send reply [Yn]
-  echo Y > REPLY-TEST.txt
+  echo "Y" > $REPLY
   run git commit -m "Add more awesome text"
   assert_success
 }
 
 @test 'Commit to master with "n" response' {
-  echo n > REPLY-TEST.txt
+  echo "n" > $REPLY
   run git commit -m "Add more awesome text"
   assert_failure
   assert_line --partial "git commit is not executed."
 }
 
 @test 'Commit to master with "invalid" response' {
-  echo invalid > REPLY-TEST.txt
+  echo "invalid" > $REPLY
   run git commit -m "Add more awesome text"
   assert_failure
   assert_line --partial "Invalid command! git commit is not executed."
@@ -51,7 +52,6 @@ teardown() {
 
 @test 'Commit to non-protected branch' {
   git checkout -b feature/branch-1
-  echo "" > REPLY-TEST.txt
   run git commit -m "Add more awesome text"
   assert_success
 }
