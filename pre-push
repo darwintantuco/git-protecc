@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+
+# Get branch from git config
 PROTECTED_BRANCHES=$(git config --get-all git-protecc.branch)
 # Get current branch
 CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PROMPT="You're about to push in $CURRENT_BRANCH branch. Are you sure? [Yn]: "
 NO="git push is not executed."
-INVALID="Invalid command! git push is not executed."
+INVALID="Invalid command. git push is not executed."
 REPLY="REPLY-TEST.txt"
 
 # Check if current branch is protected

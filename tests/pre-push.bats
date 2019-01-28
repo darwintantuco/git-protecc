@@ -56,7 +56,7 @@ teardown() {
   run git commit -m "Add more awesome text"
   run git push origin master
   assert_failure
-  # assert_line --partial "Invalid command! git push is not executed."
+  assert_line --partial "Invalid command. git push is not executed."
 }
 
 @test 'git push to non-protected branch' {

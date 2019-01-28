@@ -39,7 +39,6 @@ initialize_git() {
   assert_line --partial "git-protecc should be executed on a git repository"
 }
 
-
 @test 'git-protecc branch' {
   initialize_git
 
@@ -63,7 +62,7 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc branch add kappa
 
   assert_failure
-  assert_line --partial "Invalid git branch kappa"
+  assert_line --partial "kappa is not a git branch"
 }
 
 @test 'git-protecc branch add develop master' {
@@ -129,5 +128,5 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc invalid args
 
   assert_failure
-  assert_line --partial "Invalid command git-protecc invalid args"
+  assert_line --partial "git-protecc invalid args is invalid"
 }
