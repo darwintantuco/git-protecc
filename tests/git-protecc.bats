@@ -80,7 +80,7 @@ initialize_git() {
 @test 'git-protecc branch remove develop' {
   initialize_git
   git checkout -b develop
-  git-protecc branch add develop
+  $BASE_DIR/bin/git-protecc branch add develop
 
   run $BASE_DIR/bin/git-protecc branch remove develop
 
@@ -90,7 +90,7 @@ initialize_git() {
 @test 'git-protecc branch remove develop master' {
   initialize_git
   git checkout -b develop
-  git-protecc branch add develop master
+  $BASE_DIR/bin/git-protecc branch add develop master
 
   run $BASE_DIR/bin/git-protecc branch remove develop master
 
