@@ -1,12 +1,122 @@
-#!/usr/bin/env sh
-IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
+#!/usr/bin/env bash
+
+ARGS=($@)
 NPM_GLOBAL_PATH="$(npm config get prefix)"
-if [[ $IS_GIT_REPO ]]
+
+is_git_repo() {
+ $(git rev-parse --is-inside-work-tree 2> /dev/null)
+}
+
+info() {
+  echo "usage: git-protecc <commands>"
+  echo ""
+  echo "commands:"
+  echo "  branch                   list all protected branches"
+  echo "  branch add <branch>      add branch to protected branches"
+  echo "  branch remove <branch>   remove branch from protected branches"
+  echo ""
+  echo "should be executed on a git repository"
+}
+
+check_args() {
+  if [ "${ARGS[*]}" = "" ]; then
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "--help" ]; then
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "--h" ]; then
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "branch" ]; then
+    protected_branches
+    exit 0
+  elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
+    add_protected_branch ${ARGS[*]:2}
+    protected_branches
+    exit 0
+  elif [ "${ARGS[*]:0:2}" = "branch remove" ]; then
+    remove_protected_branch ${ARGS[*]:2}
+    protected_branches
+    exit 0
+  else
+    echo "git-protecc ${ARGS[*]} is invalid"
+    echo ""
+    info
+    exit 1
+  fi
+}
+
+protected_branches() {
+  echo $(git config --get-all git-protecc.branch)
+}
+
+is_existing_git_branch() {
+  # suppress all output
+  $(git rev-parse --verify $1 > /dev/null 2>&1)
+}
+
+git_branch_exist() {
+  branch=($@)
+  for branch in "${branch[@]}"
+  do
+    if ! is_existing_git_branch $branch; then
+      echo "$branch is not a git branch"
+      echo ""
+      info
+      exit 1
+    fi
+  done
+}
+
+protected_branch_exist() {
+  branch=($@)
+  for branch in "${branch[@]}"
+  do
+    if ! is_protected_branch $branch; then
+      echo "$branch is not a protected branch"
+      echo ""
+      info
+      exit 1
+    fi
+  done
+}
+
+is_protected_branch() {
+  $(git config --get-all git-protecc.branch | grep $1$ > /dev/null 2>&1)
+}
+
+add_protected_branch() {
+  git_branch_exist $@
+
+  for branch in $@
+  do
+    if ! is_protected_branch $branch; then
+      git config --add git-protecc.branch $branch
+    fi
+  done
+}
+
+remove_protected_branch() {
+  protected_branch_exist $@
+
+  for branch in $@
+  do
+    if is_protected_branch $branch; then
+      git config --unset git-protecc.branch $branch
+    fi
+  done
+}
+
+if is_git_repo;
 then
-  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/protecc.sh .git/hooks/
-  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-commit .git/hooks/
-  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
-  echo git-protecc hooks copied.
+  check_args
+  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push $(git rev-parse --show-toplevel)/.git/hooks/
+  info
   exit 0
+else
+  echo "git-protecc should be executed on a git repository"
+  echo ""
+  info
+  exit 1
 fi
-echo Not a git repository!
