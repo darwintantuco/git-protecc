@@ -32,7 +32,7 @@ check_args() {
   elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
     add_protected_branch ${ARGS[*]:2}
     protected_branches
-    cp ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push $(git rev-parse --show-toplevel)/.git/hooks/
+    cp ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
     exit 0
   elif [ "${ARGS[*]:0:2}" = "branch remove" ]; then
     remove_protected_branch ${ARGS[*]:2}
