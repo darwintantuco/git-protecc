@@ -10,30 +10,22 @@ is_git_repo() {
 info() {
   echo "usage: git-protecc <commands>"
   echo ""
-  echo "execute on a git repository"
-  echo ""
   echo "commands:"
   echo "  branch                   list all protected branches"
   echo "  branch add <branch>      add branch to protected branches"
   echo "  branch remove <branch>   remove branch from protected branches"
+  echo ""
+  echo "should be executed on a git repository"
 }
 
 check_args() {
-  # echo args
-  # echo $ARGS
-  # echo wat
-  # echo "${ARGS[*]:2}"
-
   if [ "${ARGS[*]}" = "" ]; then
-    echo "no args"
     info
     exit 0
   elif [ "${ARGS[*]}" = "--help" ]; then
-    echo "--help"
     info
     exit 0
   elif [ "${ARGS[*]}" = "--h" ]; then
-    echo "-h"
     info
     exit 0
   elif [ "${ARGS[*]}" = "branch" ]; then
@@ -48,7 +40,7 @@ check_args() {
     protected_branches
     exit 0
   else
-    echo "Invalid command git-protecc ${ARGS[*]}"
+    echo "git-protecc ${ARGS[*]} is invalid"
     echo ""
     info
     exit 1
@@ -56,11 +48,11 @@ check_args() {
 }
 
 protected_branches() {
-  echo -e $(git config --get-all git-protecc.branch)
+  echo $(git config --get-all git-protecc.branch)
 }
 
 is_existing_git_branch() {
-  # supress all output
+  # suppress all output
   $(git rev-parse --verify $1 > /dev/null 2>&1)
 }
 
@@ -69,7 +61,7 @@ git_branch_exist() {
   for branch in "${branch[@]}"
   do
     if ! is_existing_git_branch $branch; then
-      echo "Invalid git branch $branch"
+      echo "$branch is not a git branch"
       echo ""
       info
       exit 1
@@ -82,7 +74,7 @@ protected_branch_exist() {
   for branch in "${branch[@]}"
   do
     if ! is_protected_branch $branch; then
-      echo "Invalid git-protecc branch $branch"
+      echo "$branch is not a protected branch"
       echo ""
       info
       exit 1
@@ -119,10 +111,12 @@ remove_protected_branch() {
 if is_git_repo;
 then
   check_args
-  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
+  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push $(git rev-parse --show-toplevel)/.git/hooks/
   info
   exit 0
 else
   echo "git-protecc should be executed on a git repository"
+  echo ""
+  info
   exit 1
 fi

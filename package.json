@@ -4,7 +4,6 @@
   "description": "Protection from unintentional push to protected branches",
   "scripts": {
     "test": "bats --tap ./tests/*.bats"
-
   },
   "bin": {
     "git-protecc": "./bin/git-protecc"
