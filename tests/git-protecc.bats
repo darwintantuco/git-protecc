@@ -9,7 +9,6 @@ BASE_DIR=$(dirname $BATS_TEST_DIRNAME)
 
 setup() {
   cd $AWESOME_REPO
-  cp $BASE_DIR/bin/git-protecc .
 }
 
 teardown() {
@@ -27,14 +26,14 @@ initialize_git() {
 @test 'git-protecc on git repo' {
   initialize_git
 
-  run git-protecc
+  run $BASE_DIR/bin/git-protecc
 
   assert_success
   assert_line --partial "usage: git-protecc"
 }
 
 @test 'git-protecc on non git repo' {
-  run git-protecc
+  run $BASE_DIR/bin/git-protecc
 
   assert_failure
   assert_line --partial "git-protecc should be executed on a git repository"
@@ -44,7 +43,7 @@ initialize_git() {
 @test 'git-protecc branch' {
   initialize_git
 
-  run git-protecc branch
+  run $BASE_DIR/bin/git-protecc branch
 
   assert_success
 }
@@ -52,7 +51,7 @@ initialize_git() {
 @test 'git-protecc branch add master' {
   initialize_git
 
-  run git-protecc branch add master
+  run $BASE_DIR/bin/git-protecc branch add master
 
   assert_success
   assert_line --partial "master"
@@ -61,7 +60,7 @@ initialize_git() {
 @test 'git-protecc branch add kappa' {
   initialize_git
 
-  run git-protecc branch add kappa
+  run $BASE_DIR/bin/git-protecc branch add kappa
 
   assert_failure
   assert_line --partial "Invalid git branch kappa"
@@ -71,7 +70,7 @@ initialize_git() {
   initialize_git
   git checkout -b develop
 
-  run git-protecc branch add develop master
+  run $BASE_DIR/bin/git-protecc branch add develop master
 
   assert_success
   assert_line --partial "develop"
@@ -83,7 +82,7 @@ initialize_git() {
   git checkout -b develop
   git-protecc branch add develop
 
-  run git-protecc branch remove develop
+  run $BASE_DIR/bin/git-protecc branch remove develop
 
   assert_success
 }
@@ -93,7 +92,7 @@ initialize_git() {
   git checkout -b develop
   git-protecc branch add develop master
 
-  run git-protecc branch remove develop master
+  run $BASE_DIR/bin/git-protecc branch remove develop master
 
   assert_success
 }
@@ -102,14 +101,14 @@ initialize_git() {
   initialize_git
   git checkout -b kappa
 
-  run git-protecc branch remove kappa
+  run $BASE_DIR/bin/git-protecc branch remove kappa
   assert_failure
 }
 
 @test 'git protecc --help' {
   initialize_git
 
-  run git-protecc --help
+  run $BASE_DIR/bin/git-protecc --help
 
   assert_success
   assert_line --partial "usage: git-protecc"
@@ -118,7 +117,7 @@ initialize_git() {
 @test 'git protecc --h' {
   initialize_git
 
-  run git-protecc --h
+  run $BASE_DIR/bin/git-protecc --h
 
   assert_success
   assert_line --partial "usage: git-protecc"
@@ -127,7 +126,7 @@ initialize_git() {
 @test 'git-protecc invalid args' {
   initialize_git
 
-  run git-protecc invalid args
+  run $BASE_DIR/bin/git-protecc invalid args
 
   assert_failure
   assert_line --partial "Invalid command git-protecc invalid args"
