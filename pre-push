@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 PROTECTED_BRANCHES=(master develop)
 # Get current branch
-CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PROMPT="You're about to push in $CURRENT_BRANCH branch. Are you sure? [Yn]: "
 NO="git push is not executed."
 INVALID="Invalid command! git push is not executed."
