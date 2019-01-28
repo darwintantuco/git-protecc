@@ -3,6 +3,10 @@
 ARGS=($@)
 NPM_GLOBAL_PATH="$(npm config get prefix)"
 
+is_git_repo() {
+ $(git rev-parse --is-inside-work-tree 2> /dev/null)
+}
+
 info() {
   echo "usage: git-protecc <commands>"
   echo ""
@@ -28,6 +32,7 @@ check_args() {
   elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
     add_protected_branch ${ARGS[*]:2}
     protected_branches
+    cp ../pre-push $(git rev-parse --show-toplevel)/.git/hooks/
     exit 0
   elif [ "${ARGS[*]:0:2}" = "branch remove" ]; then
     remove_protected_branch ${ARGS[*]:2}
@@ -102,9 +107,8 @@ remove_protected_branch() {
   done
 }
 
-if [[ -d ".git" ]]; then
+if is_git_repo; then
   check_args
-  cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
   info
   exit 0
 else

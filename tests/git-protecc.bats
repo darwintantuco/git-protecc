@@ -54,6 +54,8 @@ initialize_git() {
 
   assert_success
   assert_line --partial "master"
+
+  # assert [ -e $AWESOME_REPO/.git/hooks/pre-push ]
 }
 
 @test 'git-protecc branch add kappa' {
