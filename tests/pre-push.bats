@@ -19,9 +19,9 @@ setup() {
   git commit -m "Initial commit"
   git remote add origin $AWESOME_REMOTE/backup.git
 
-  # simulate `git-protecc`
-  # TODO add gitconfig for branches
+  cp $BASE_DIR/bin/git-protecc .
   cp $BASE_DIR/pre-push $AWESOME_REPO/.git/hooks/
+  run git-protecc branch add master
 
   echo MORE AWESOME TEXT > awesome.txt
   git add awesome.txt
@@ -57,7 +57,7 @@ teardown() {
   run git commit -m "Add more awesome text"
   run git push origin master
   assert_failure
-  assert_line --partial "Invalid command! git push is not executed."
+  # assert_line --partial "Invalid command! git push is not executed."
 }
 
 @test 'git push to non-protected branch' {

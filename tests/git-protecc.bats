@@ -65,7 +65,8 @@ initialize_git() {
   run git-protecc branch add develop master
 
   assert_success
-  assert_line --partial "develop master"
+  assert_line --partial "develop"
+  assert_line --partial "master"
 }
 
 @test 'git-protecc branch' {

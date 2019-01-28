@@ -65,12 +65,10 @@ is_existing_git_branch() {
 
 git_branch_exist() {
   branch=($@)
-  for i in "${branch[@]}"
+  for branch in "${branch[@]}"
   do
-    echo branch
-    echo $i
-    if ! is_existing_git_branch $i; then
-      echo "Invalid git branch $i"
+    if ! is_existing_git_branch $branch; then
+      echo "Invalid git branch $branch"
       echo ""
       info
       exit 1
@@ -78,9 +76,19 @@ git_branch_exist() {
   done
 }
 
+is_protected_branch() {
+  $(git config --get-all git-protecc.branch | grep $1$ > /dev/null 2>&1)
+}
+
 add_protected_branch() {
   git_branch_exist $@
-  protected_branches
+
+  for branch in $@
+  do
+    if ! is_protected_branch $branch; then
+      git config --add git-protecc.branch $branch
+    fi
+  done
 }
 
 if is_git_repo;

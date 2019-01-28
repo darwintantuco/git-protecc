@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-PROTECTED_BRANCHES=(master develop)
+PROTECTED_BRANCHES=$(git config --get-all git-protecc.branch)
 # Get current branch
 CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 PROMPT="You're about to push in $CURRENT_BRANCH branch. Are you sure? [Yn]: "
