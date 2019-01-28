@@ -1,10 +1,95 @@
 #!/usr/bin/env bash
-IS_GIT_REPO=`git rev-parse --is-inside-work-tree`
+#
+#
+
+ARGS=($@)
+
 NPM_GLOBAL_PATH="$(npm config get prefix)"
-if [[ $IS_GIT_REPO ]]
+
+is_git_repo() {
+ $(git rev-parse --is-inside-work-tree 2> /dev/null)
+}
+
+info() {
+  echo "usage: git-protecc <commands>"
+  echo ""
+  echo "execute on a git repository"
+  echo ""
+  echo "commands:"
+  echo "  branch                            list all protected branches"
+  echo "  branch add <branch1> <branch2>    add branch to protected branches"
+  echo "  branch remove <branch1>           remove branch from protected branches"
+}
+
+check_args() {
+  # echo args
+  # echo $ARGS
+  # echo wat
+  # echo "${ARGS[*]:2}"
+
+  if [ "${ARGS[*]}" = "" ]; then
+    echo "no args"
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "--help" ]; then
+    echo "--help"
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "--h" ]; then
+    echo "-h"
+    info
+    exit 0
+  elif [ "${ARGS[*]}" = "branch" ]; then
+    protected_branches
+    exit 0
+  elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
+    add_protected_branch ${ARGS[*]:2}
+    protected_branches
+    exit 0
+  else
+    echo "Invalid command git-protecc ${ARGS[*]}"
+    echo ""
+    info
+    exit 1
+  fi
+}
+
+protected_branches() {
+  echo "$(git config --get-all git-protecc.branch)"
+}
+
+is_existing_git_branch() {
+  # supress all output
+  $(git rev-parse --verify $1 > /dev/null 2>&1)
+}
+
+git_branch_exist() {
+  branch=($@)
+  for i in "${branch[@]}"
+  do
+    echo branch
+    echo $i
+    if ! is_existing_git_branch $i; then
+      echo "Invalid git branch $i"
+      echo ""
+      info
+      exit 1
+    fi
+  done
+}
+
+add_protected_branch() {
+  git_branch_exist $@
+  protected_branches
+}
+
+if is_git_repo;
 then
+  check_args
   cp -i ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
-  echo git-protecc hooks copied.
+  info
   exit 0
+else
+  echo "git-protecc should be executed on a git repository"
+  exit 1
 fi
-echo Not a git repository!
