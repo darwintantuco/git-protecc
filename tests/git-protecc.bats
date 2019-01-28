@@ -40,6 +40,15 @@ initialize_git() {
   assert_line --partial "git-protecc should be executed on a git repository"
 }
 
+
+@test 'git-protecc branch' {
+  initialize_git
+
+  run git-protecc branch
+
+  assert_success
+}
+
 @test 'git-protecc branch add master' {
   initialize_git
 
@@ -69,12 +78,32 @@ initialize_git() {
   assert_line --partial "master"
 }
 
-@test 'git-protecc branch' {
+@test 'git-protecc branch remove develop' {
   initialize_git
+  git checkout -b develop
+  git-protecc branch add develop
 
-  run git-protecc branch
+  run git-protecc branch remove develop
 
   assert_success
+}
+
+@test 'git-protecc branch remove develop master' {
+  initialize_git
+  git checkout -b develop
+  git-protecc branch add develop master
+
+  run git-protecc branch remove develop master
+
+  assert_success
+}
+
+@test 'git-protecc branch remove kappa' {
+  initialize_git
+  git checkout -b kappa
+
+  run git-protecc branch remove kappa
+  assert_failure
 }
 
 @test 'git protecc --help' {
