@@ -19,7 +19,6 @@ setup() {
   git commit -m "Initial commit"
   git remote add origin $AWESOME_REMOTE/backup.git
 
-  cp $BASE_DIR/pre-push $AWESOME_REPO/.git/hooks/
   run $BASE_DIR/bin/git-protecc branch add master
 
   echo MORE AWESOME TEXT > awesome.txt
@@ -39,14 +38,18 @@ teardown() {
 @test 'git push to master with "Y" response' {
   echo "Y" > $REPLY
   run git commit -m "Add more awesome text"
+
   run git push origin master
+
   assert_success
 }
 
 @test 'git push to master with "n" response' {
   echo "n" > $REPLY
   run git commit -m "Add more awesome text"
+
   run git push origin master
+
   assert_failure
   assert_line --partial "git push is not executed."
 }
@@ -54,7 +57,9 @@ teardown() {
 @test 'git push to master with "invalid" response' {
   echo "invalid" > $REPLY
   run git commit -m "Add more awesome text"
+
   run git push origin master
+
   assert_failure
   assert_line --partial "Invalid command. git push is not executed."
 }
@@ -62,6 +67,8 @@ teardown() {
 @test 'git push to non-protected branch' {
   git checkout -b feature/branch-1
   run git commit -m "Add more awesome text"
+
   run git push origin master
+
   assert_success
 }

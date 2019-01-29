@@ -30,6 +30,7 @@ initialize_git() {
 
   assert_success
   assert_line --partial "usage: git-protecc"
+
 }
 
 @test 'git-protecc on non git repo' {
@@ -54,8 +55,6 @@ initialize_git() {
 
   assert_success
   assert_line --partial "master"
-
-  # assert [ -e $AWESOME_REPO/.git/hooks/pre-push ]
 }
 
 @test 'git-protecc branch add kappa' {
@@ -78,6 +77,26 @@ initialize_git() {
   assert_line --partial "master"
 }
 
+@test 'git-protecc branch add copy pre-push hook' {
+  initialize_git
+
+  run $BASE_DIR/bin/git-protecc branch add master
+
+  assert_success
+  assert [ -e $AWESOME_REPO/.git/hooks/pre-push ]
+}
+
+@test 'git-protecc branch add backup existing pre-push hook' {
+  initialize_git
+  touch $AWESOME_REPO/.git/hooks/pre-push
+
+  run $BASE_DIR/bin/git-protecc branch add master
+
+  assert_success
+  assert [ -e $AWESOME_REPO/.git/hooks/pre-push.old ]
+  assert [ -e $AWESOME_REPO/.git/hooks/pre-push ]
+}
+
 @test 'git-protecc branch remove develop' {
   initialize_git
   git checkout -b develop
@@ -88,6 +107,14 @@ initialize_git() {
   assert_success
 }
 
+@test 'git-protecc branch remove kappa' {
+  initialize_git
+  git checkout -b kappa
+
+  run $BASE_DIR/bin/git-protecc branch remove kappa
+  assert_failure
+}
+
 @test 'git-protecc branch remove develop master' {
   initialize_git
   git checkout -b develop
@@ -96,14 +123,6 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc branch remove develop master
 
   assert_success
-}
-
-@test 'git-protecc branch remove kappa' {
-  initialize_git
-  git checkout -b kappa
-
-  run $BASE_DIR/bin/git-protecc branch remove kappa
-  assert_failure
 }
 
 @test 'git protecc --help' {
