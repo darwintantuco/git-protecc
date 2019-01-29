@@ -1,6 +1,6 @@
 {
   "name": "git-protecc",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Protection from unintentional push to protected branches",
   "scripts": {
     "test": "bats --tap ./tests/*.bats"

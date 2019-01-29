@@ -65,7 +65,7 @@ EOT
 }
 
 add_pre_push_hook() {
-  if [ ! -f $pre_push_hook_path ]; then
+  if [ ! -f $git_hooks_path/pre-push ]; then
     generate_pre_push_hook
   else
     if ! git_protecc_pre_push_exist; then
