@@ -16,6 +16,51 @@ info() {
   echo "  branch remove <branch>   remove branch from protected branches"
 }
 
+add_pre_push_hook() {
+  cat << EOT > $(git rev-parse --show-toplevel)/.git/hooks/pre-push
+#!/usr/bin/env bash
+
+# Get branch from git config
+PROTECTED_BRANCHES=\$(git config --get-all git-protecc.branch)
+# Get current branch
+CURRENT_BRANCH="\$(git rev-parse --abbrev-ref HEAD)"
+PROMPT="You're about to push in \$CURRENT_BRANCH branch. Are you sure? [Yn]: "
+NO="git push is not executed."
+INVALID="Invalid command. git push is not executed."
+REPLY="REPLY-TEST.txt"
+
+# Check if current branch is protected
+if [[ " \${PROTECTED_BRANCHES[@]} " =~ " \$CURRENT_BRANCH " ]]; then
+  # Wait for user input when REPLY-TEST.txt does not exist
+  if [ ! -f  REPLY-TEST.txt ]; then
+    # Assigns standard input to keyboard
+    exec < /dev/tty
+    read -p "\$PROMPT" REPLY
+  else
+    # Hacks: get reply from test file
+    REPLY=\$(cat \$REPLY)
+  fi
+  case "\$REPLY" in
+    Y )
+      # Exit gracefully, proceed with git commit/push
+      exit 0
+      ;;
+    n )
+      echo \$NO
+      exit 1
+      ;;
+    * )
+      echo \$INVALID
+      exit 1
+      ;;
+  esac
+fi
+EOT
+
+
+chmod +x $(git rev-parse --show-toplevel)/.git/hooks/pre-push
+}
+
 check_args() {
   if [ "${ARGS[*]}" = "" ]; then
     info
@@ -32,7 +77,7 @@ check_args() {
   elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
     add_protected_branch ${ARGS[*]:2}
     protected_branches
-    cp ${NPM_GLOBAL_PATH}/lib/node_modules/git-protecc/pre-push .git/hooks/
+    add_pre_push_hook
     exit 0
   elif [ "${ARGS[*]:0:2}" = "branch remove" ]; then
     remove_protected_branch ${ARGS[*]:2}
