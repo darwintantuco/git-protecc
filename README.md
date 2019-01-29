@@ -4,7 +4,9 @@
 
 Custom `pre-push` git hooks to prompt user when pushing to protected branches
 
-git config is used to set protected branches
+`git config` is used to set protected branches
+
+Backup existing `pre-push` hook
 
 ![sample](demo.gif)
 
@@ -16,13 +18,9 @@ git config is used to set protected branches
 npm install -g git-protecc
 ```
 
-### yarn
-
-```
-yarn add global git-protecc
-```
-
 ## Usage
+
+Execute `git-protecc` on a git repostory.
 
 ### Add branch to protected branches
 
