@@ -17,7 +17,7 @@ info() {
   echo "  branch remove <branch>   remove branch from protected branches"
 }
 
-git_protecc_pre_push_exist()  {
+pre_push_exist()  {
   cat $git_hooks_path/pre-push | grep PROTECTED_BRANCHES > /dev/null 2>&1
 }
 
@@ -68,8 +68,8 @@ add_pre_push_hook() {
   if [ ! -f $git_hooks_path/pre-push ]; then
     generate_pre_push_hook
   else
-    if ! git_protecc_pre_push_exist; then
-      # back up existing pre-push hook
+    if ! pre_push_exist; then
+      echo "Copying existing pre-push to pre-push.old"
       mv $git_hooks_path/pre-push $git_hooks_path/pre-push.old
       generate_pre_push_hook
     fi
@@ -87,17 +87,17 @@ check_args() {
     info
     exit 0
   elif [ "${ARGS[*]}" = "branch" ]; then
-    protected_branches
+    list_protected_branches
     add_pre_push_hook
     exit 0
   elif [ "${ARGS[*]:0:2}" = "branch add" ]; then
     add_protected_branch ${ARGS[*]:2}
-    protected_branches
+    list_protected_branches
     add_pre_push_hook
     exit 0
   elif [ "${ARGS[*]:0:2}" = "branch remove" ]; then
     remove_protected_branch ${ARGS[*]:2}
-    protected_branches
+    list_protected_branches
     exit 0
   else
     echo "git-protecc ${ARGS[*]} is invalid"
@@ -107,7 +107,7 @@ check_args() {
   fi
 }
 
-protected_branches() {
+list_protected_branches() {
   echo $(git config --get-all git-protecc.branch)
 }
 
@@ -116,7 +116,7 @@ is_existing_git_branch() {
   $(git rev-parse --verify $1 > /dev/null 2>&1)
 }
 
-git_branch_exist() {
+handle_invalid_git_branch() {
   branch=($@)
   for branch in "${branch[@]}"
   do
@@ -129,7 +129,7 @@ git_branch_exist() {
   done
 }
 
-protected_branch_exist() {
+handle_invalid_remove() {
   branch=($@)
   for branch in "${branch[@]}"
   do
@@ -147,7 +147,7 @@ is_protected_branch() {
 }
 
 add_protected_branch() {
-  git_branch_exist $@
+  handle_invalid_git_branch $@
 
   for branch in $@
   do
@@ -158,7 +158,7 @@ add_protected_branch() {
 }
 
 remove_protected_branch() {
-  protected_branch_exist $@
+  handle_invalid_remove $@
 
   for branch in $@
   do
