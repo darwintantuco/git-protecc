@@ -1,23 +1,47 @@
 # git-protecc
+
 [![Build Status](https://travis-ci.org/dcrtantuco/git-protecc.svg?branch=master)](https://travis-ci.org/dcrtantuco/git-protecc)
 
-Custom `pre-commit` and `pre-push` git hooks to prompt user when pushing/committing to master/develop
+Custom `pre-push` git hooks to prompt user when pushing to protected branches
+
+git config is used to set protected branches
 
 ![sample](demo.gif)
 
 ## Installation
+
 ### npm
+
 ```
 npm install -g git-protecc
 ```
 
-## Usage
-Execute on a git repository _(should be in root for now, where .git is located)_
-```
-git-protecc
-```
-This command copies custom `pre-commit` and `pre-push` hooks to current repository
+### yarn
 
-## Protected Branches
-- master
-- develop
+```
+yarn add global git-protecc
+```
+
+## Usage
+
+### Add branch to protected branches
+
+```
+git-protecc branch add <branch>
+```
+
+### List all protected branches
+
+```
+git-protecc branch
+```
+
+### Remove branch from protected branches
+
+```
+git-protecc branch remove <branch>
+```
+
+## License
+
+MIT
