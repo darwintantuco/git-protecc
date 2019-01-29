@@ -20,7 +20,7 @@ npm install -g git-protecc
 
 ## Usage
 
-Execute `git-protecc` on a git repostory.
+Execute `git-protecc` on a git repository
 
 ### Add branch to protected branches
 
