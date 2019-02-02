@@ -10,34 +10,30 @@ Backup existing `pre-push` hook
 
 ![sample](demo.gif)
 
-## Installation
+## Getting Started
 
-### npm
+### Requirements
 
-```
-npm install -g git-protecc
-```
+npm >= 5.2.0
 
 ## Usage
 
-Execute `git-protecc` on a git repository
-
-### Add branch to protected branches
+#### Add branch to protected branches
 
 ```
-git-protecc branch add <branch>
+npx git-protecc branch add <branch-1> <branch-2>
 ```
 
-### List all protected branches
+#### Remove branch from protected branches
 
 ```
-git-protecc branch
+npx git-protecc branch remove <branch-1> <branch-2>
 ```
 
-### Remove branch from protected branches
+#### List all protected branches
 
 ```
-git-protecc branch remove <branch>
+npx git-protecc branch
 ```
 
 ## License
