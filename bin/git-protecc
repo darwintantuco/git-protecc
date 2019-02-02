@@ -9,12 +9,13 @@ is_git_repo() {
 git_hooks_path=$(git rev-parse --show-toplevel)/.git/hooks
 
 info() {
-  echo "usage: git-protecc <commands>"
+  echo "usage:"
+  echo "  npx git-protecc <commands>"
   echo ""
   echo "commands:"
-  echo "  branch                   list all protected branches"
-  echo "  branch add <branch>      add branch to protected branches"
-  echo "  branch remove <branch>   remove branch from protected branches"
+  echo "  branch                     list all protected branches"
+  echo "  branch add <branch>        add branch to protected branches"
+  echo "  branch remove <branch>     remove branch from protected branches"
 }
 
 pre_push_exist()  {
@@ -100,7 +101,7 @@ check_args() {
     list_protected_branches
     exit 0
   else
-    echo "git-protecc ${ARGS[*]} is invalid"
+    echo "npx git-protecc ${ARGS[*]} is invalid"
     echo ""
     info
     exit 1
@@ -171,7 +172,7 @@ remove_protected_branch() {
 if is_git_repo; then
   check_args
 else
-  echo "git-protecc should be executed on a git repository"
+  echo "npx git-protecc should be executed on a git repository"
   echo ""
   info
   exit 1

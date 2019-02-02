@@ -29,7 +29,7 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc
 
   assert_success
-  assert_line --partial "usage: git-protecc"
+  assert_line --partial "npx git-protecc"
 
 }
 
@@ -131,7 +131,7 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc --help
 
   assert_success
-  assert_line --partial "usage: git-protecc"
+  assert_line --partial "npx git-protecc"
 }
 
 @test 'git protecc --h' {
@@ -140,7 +140,7 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc --h
 
   assert_success
-  assert_line --partial "usage: git-protecc"
+  assert_line --partial "npx git-protecc"
 }
 
 @test 'git-protecc invalid args' {
@@ -149,5 +149,5 @@ initialize_git() {
   run $BASE_DIR/bin/git-protecc invalid args
 
   assert_failure
-  assert_line --partial "git-protecc invalid args is invalid"
+  assert_line --partial "npx git-protecc invalid args is invalid"
 }

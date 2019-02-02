@@ -18,22 +18,22 @@ npm >= 5.2.0
 
 ## Usage
 
+#### List all protected branches
+
+```
+npx git-protecc branch
+```
+
 #### Add branch to protected branches
 
 ```
-npx git-protecc branch add <branch-1> <branch-2>
+npx git-protecc branch add <branch>
 ```
 
 #### Remove branch from protected branches
 
 ```
-npx git-protecc branch remove <branch-1> <branch-2>
-```
-
-#### List all protected branches
-
-```
-npx git-protecc branch
+npx git-protecc branch remove <branch>
 ```
 
 ## License
