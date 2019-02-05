@@ -16,24 +16,26 @@ Backup existing `pre-push` hook
 
 npm >= 5.2.0
 
+bash
+
 ## Usage
 
 #### List all protected branches
 
-```
-npx git-protecc branch
+```bash
+$ npx git-protecc branch
 ```
 
 #### Add branch to protected branches
 
-```
-npx git-protecc branch add <branch>
+```bash
+$ npx git-protecc branch add <branch>
 ```
 
 #### Remove branch from protected branches
 
-```
-npx git-protecc branch remove <branch>
+```bash
+$ npx git-protecc branch remove <branch>
 ```
 
 ## License
