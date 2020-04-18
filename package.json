@@ -5,13 +5,19 @@
   "scripts": {
     "test": "bats --tap ./tests/*.bats"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn test"
+    }
+  },
   "bin": {
     "git-protecc": "./bin/git-protecc"
   },
   "devDependencies": {
     "bats": "^1.0.2",
     "bats-assert": "https://github.com/ztombol/bats-assert",
-    "bats-support": "https://github.com/ztombol/bats-support"
+    "bats-support": "https://github.com/ztombol/bats-support",
+    "husky": "^4.2.5"
   },
   "repository": "git@github.com:darwintantuco/git-protecc.git",
   "author": "Darwin Christopher Tantuco <dcrtantuco@gmail.com>",
