@@ -18,10 +18,6 @@ teardown() {
 
 initialize_git() {
   git init
-
-  git config user.email "you@example.com"
-  git config user.name "Your Name"
-
   echo "AWESOME TEXT" > awesome.txt
   git add awesome.txt
   git commit -m "Initial commit"
