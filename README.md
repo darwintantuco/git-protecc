@@ -1,6 +1,6 @@
 # git-protecc
 
-[![Build Status](https://travis-ci.org/darwintantuco/git-protecc.svg?branch=master)](https://travis-ci.org/darwintantuco/git-protecc)
+![Node.js CI](https://github.com/darwintantuco/git-protecc/workflows/Node.js%20CI/badge.svg)
 
 Custom `pre-push` git hooks to prompt user when pushing to protected branches
 
